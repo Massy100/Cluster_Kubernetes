@@ -118,3 +118,27 @@ simultáneamente. Esta es la comprobación final de la infraestructura antes de
 utilizar el clúster de Kubernetes.
 
 ![Los cuatro nodos de Kubernetes en ejecución](docs/img/nodes_running.png)
+
+### 7.1 Servicios de k3s y Traefik
+
+La lista de servicios de k3s confirma que los componentes principales del
+clúster están activos. También muestra el servicio Traefik, que proporciona
+la entrada de tráfico HTTP y HTTPS hacia las aplicaciones desplegadas.
+
+![Servicios de k3s, incluido Traefik](docs/img/k3s_traefik.png)
+
+### 7.2 Recursos administrados por Helm
+
+La salida de Helm muestra los recursos instalados y administrados mediante
+releases. Esta comprobación confirma que las aplicaciones y sus componentes
+asociados fueron desplegados correctamente en el clúster.
+
+![Recursos administrados por Helm](docs/img/helm_resources.png)
+
+### 7.3 Verificación de taints
+
+La verificación de taints muestra las restricciones configuradas en los nodos
+de Kubernetes. Esto permite confirmar qué nodos pueden recibir determinados
+pods y que las reglas de programación del clúster están aplicadas.
+
+![Verificación de taints](docs/img/taints_verification.png)
