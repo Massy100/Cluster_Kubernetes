@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-install
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Massy100/Cluster_Kubernetes.git
+    targetRevision: main
+    path: k8s/platform/metallb
+    directory:
+      include: installation.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
