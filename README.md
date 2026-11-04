@@ -142,3 +142,12 @@ de Kubernetes. Esto permite confirmar qué nodos pueden recibir determinados
 pods y que las reglas de programación del clúster están aplicadas.
 
 ![Verificación de taints](docs/img/taints_verification.png)
+
+### 7.4 Instalación de Argo CD
+
+La salida de la instalación de Argo CD confirma que sus recursos fueron
+creados correctamente en el clúster de Kubernetes. Esta herramienta permite
+gestionar las aplicaciones mediante un enfoque de entrega continua basado en
+GitOps.
+
+![Instalación de Argo CD](docs/img/argocd_installation.png)
