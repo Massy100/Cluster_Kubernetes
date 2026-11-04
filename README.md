@@ -151,3 +151,19 @@ gestionar las aplicaciones mediante un enfoque de entrega continua basado en
 GitOps.
 
 ![Instalación de Argo CD](docs/img/argocd_installation.png)
+
+### 7.5 Aplicación de MetalLB
+
+La captura muestra la aplicación de MetalLB desplegada en el clúster de
+Kubernetes. MetalLB proporciona balanceo de carga para exponer servicios con
+direcciones IP accesibles desde la red local.
+
+![Aplicación de MetalLB](docs/img/metallb_application.png)
+
+### 7.6 Configuración funcional de MetalLB
+
+La captura confirma que la configuración de MetalLB se encuentra funcionando
+correctamente. La asignación de direcciones IP permite que los servicios
+publicados mediante `LoadBalancer` sean accesibles desde la red configurada.
+
+![Configuración funcional de MetalLB](metallb_configr_working.png)
