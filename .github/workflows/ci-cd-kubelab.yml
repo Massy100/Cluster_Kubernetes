@@ -1,0 +1,139 @@
+name: KubeLab CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/api/**"
+      - "apps/web/**"
+      - ".github/workflows/ci-cd-kubelab.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: kubelab-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/api/package-lock.json
+
+      - name: Validate API
+        working-directory: apps/api
+        run: |
+          npm ci
+          node --check src/index.js
+
+      - name: Set image tag
+        run: |
+          echo "IMAGE_TAG=sha-${GITHUB_SHA::12}" >> "$GITHUB_ENV"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish API
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/api
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/massy100/kubelab-api:${{ env.IMAGE_TAG }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/Massy100/Cluster_Kubernetes
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
+
+      - name: Build and publish Web
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/web
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/massy100/kubelab-web:${{ env.IMAGE_TAG }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/Massy100/Cluster_Kubernetes
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
+
+      - name: Update Kubernetes image tags
+        env:
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          tag = os.environ["IMAGE_TAG"]
+
+          files = {
+              "k8s/apps/api/deployment.yaml": "kubelab-api",
+              "k8s/apps/web/deployment.yaml": "kubelab-web",
+          }
+
+          for filename, image in files.items():
+              path = Path(filename)
+              content = path.read_text(encoding="utf-8")
+
+              pattern = (
+                  r"(image:\s*ghcr\.io/massy100/"
+                  + re.escape(image)
+                  + r":)[^\s]+"
+              )
+
+              updated, count = re.subn(
+                  pattern,
+                  lambda match: match.group(1) + tag,
+                  content,
+              )
+
+              if count != 1:
+                  raise SystemExit(
+                      f"Expected one image in {filename}, found {count}"
+                  )
+
+              path.write_text(updated, encoding="utf-8")
+              print(f"Updated {filename} to {tag}")
+          PY
+
+      - name: Commit GitOps changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            k8s/apps/api/deployment.yaml \
+            k8s/apps/web/deployment.yaml
+
+          if git diff --cached --quiet; then
+            echo "No manifest changes"
+          else
+            git commit -m "chore: update KubeLab image tags [skip ci]"
+            git push origin HEAD:main
+          fi
