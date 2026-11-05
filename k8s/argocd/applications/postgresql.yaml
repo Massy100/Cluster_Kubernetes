@@ -15,6 +15,15 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kubelab
 
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: postgresql
+      namespace: kubelab
+      jsonPointers:
+        - /spec/volumeClaimTemplates/0/apiVersion
+        - /spec/volumeClaimTemplates/0/kind
+
   syncPolicy:
     automated:
       prune: false
@@ -22,3 +31,4 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - RespectIgnoreDifferences=true
