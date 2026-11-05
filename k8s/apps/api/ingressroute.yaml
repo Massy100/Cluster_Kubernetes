@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kubelab-api
+  namespace: kubelab
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`api.kubelab.test`)
+      services:
+        - name: kubelab-api
+          port: 80
