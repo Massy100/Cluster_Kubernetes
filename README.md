@@ -207,3 +207,89 @@ previamente almacenados. El resultado confirma que la aplicación conserva la
 información mediante el volumen persistente después de reiniciarse.
 
 ![Recreación del pod y recuperación de datos](docs/img/pod_recreation.png)
+
+## 8. Gestión segura de secretos con Doppler
+
+### 8.1 Aplicación de Doppler
+
+La captura muestra Doppler aplicado en el clúster de Kubernetes. Esta
+integración permite administrar los secretos de las aplicaciones desde una
+fuente centralizada y evitar su almacenamiento directo en los manifiestos.
+
+![Doppler aplicado](docs/img/doppler_applied.png)
+
+### 8.2 Secretos administrados por Doppler
+
+La vista de Doppler muestra los secretos configurados para el proyecto. Esto
+confirma que las credenciales necesarias están disponibles en el gestor de
+secretos para ser utilizadas por las aplicaciones autorizadas.
+
+![Secretos administrados por Doppler](docs/img/dopller_secrets.png)
+
+### 8.3 Namespace de secretos
+
+La captura confirma la existencia del namespace destinado a los secretos de
+la aplicación. Separar estos recursos facilita su administración y limita el
+alcance de los componentes que pueden acceder a ellos.
+
+![Namespace de secretos](docs/img/secrets_namespace.png)
+
+### 8.4 Creación del token de Doppler
+
+La salida muestra la creación del token utilizado para conectar Kubernetes
+con Doppler. Este token permite sincronizar los secretos de forma controlada
+sin exponer las credenciales directamente en los archivos de configuración.
+
+![Token de Doppler](docs/img/doppler_token_created.png)
+
+### 8.5 Deshabilitación de credenciales anteriores
+
+La captura evidencia que la credencial anterior fue deshabilitada después de
+la configuración de Doppler. Esta acción evita que un token antiguo continúe
+teniendo acceso a los secretos del proyecto.
+
+![Credencial anterior deshabilitada](docs/img/old_credential_disabled.png)
+
+### 8.6 Aplicación de los secretos de Doppler
+
+La salida confirma que los secretos de Doppler fueron aplicados correctamente
+en Kubernetes. La aplicación puede consumirlos sin que sus valores queden
+expuestos en los manifiestos del clúster.
+
+![Secretos de Doppler aplicados](docs/img/doppler_secrets_applied.png)
+
+## 9. Validación de PostgreSQL
+
+### 9.1 Credenciales de PostgreSQL en Doppler
+
+La captura muestra las credenciales de PostgreSQL almacenadas en Doppler.
+Esto confirma que los datos sensibles de conexión están centralizados y
+disponibles para el despliegue autorizado de la base de datos.
+
+![Credenciales de PostgreSQL en Doppler](docs/img/postgres_credentials_doppler.png)
+
+### 9.2 Verificación de las credenciales de PostgreSQL
+
+La verificación confirma que PostgreSQL recibe y utiliza correctamente las
+credenciales administradas por Doppler. Esta comprobación valida la conexión
+entre el gestor de secretos y la aplicación de base de datos.
+
+![Verificación de las credenciales de PostgreSQL](docs/img/postgres_credentials_verification.png)
+
+### 9.3 Persistencia de PostgreSQL
+
+La captura muestra PostgreSQL funcionando con almacenamiento persistente.
+Esto garantiza que los datos de la base de datos se conserven aunque el pod
+sea reiniciado o recreado.
+
+![Persistencia de PostgreSQL](docs/img/postgres_persistence.png)
+
+### 9.4 Acceso mediante port forwarding
+
+El reenvío de puertos permite acceder temporalmente al servicio de PostgreSQL
+desde el entorno local para realizar comprobaciones. Esta técnica facilita la
+validación del servicio sin exponerlo permanentemente fuera del clúster.
+
+![Acceso mediante port forwarding](docs/img/port_forwarding.png)
+
+![Sinrconizacion de postgresql](docs/img/postgrsql_sync.png)
