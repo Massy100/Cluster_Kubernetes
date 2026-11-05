@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Massy100/Cluster_Kubernetes.git
+    targetRevision: main
+    path: k8s/apps/postgresql
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubelab
+
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
