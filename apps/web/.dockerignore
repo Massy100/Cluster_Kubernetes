@@ -1,0 +1,5 @@
+.git
+.gitkeep
+node_modules
+.env
+.env.*

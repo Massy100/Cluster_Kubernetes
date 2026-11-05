@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KubeLab | Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">◈ KubeLab</div>
+    <span class="subtitle">Kubernetes Management Lab</span>
+  </header>
+
+  <main class="container">
+    <div class="heading">
+      <div>
+        <p class="eyebrow">PROYECTO DE VIRTUALIZACIÓN</p>
+        <h1>Panel de administración</h1>
+        <p>Gestión de registros con Node.js, Kubernetes y PostgreSQL.</p>
+      </div>
+      <button id="refresh" class="secondary">Actualizar</button>
+    </div>
+
+    <section class="stats">
+      <article class="card stat">
+        <span>Registros almacenados</span>
+        <strong id="total">—</strong>
+      </article>
+      <article class="card stat">
+        <span>Estado de API</span>
+        <strong id="api-status">Comprobando...</strong>
+      </article>
+      <article class="card stat">
+        <span>Base de datos</span>
+        <strong id="db-status">Comprobando...</strong>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2 id="form-title">Crear registro</h2>
+      <form id="record-form">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" maxlength="150"
+               placeholder="Nombre del registro" required>
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" rows="3"
+                  placeholder="Descripción del registro"></textarea>
+
+        <div class="actions">
+          <button type="button" id="cancel"
+                  class="secondary" hidden>Cancelar edición</button>
+          <button type="submit" id="save">Guardar registro</button>
+        </div>
+      </form>
+      <p id="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <h2>Registros</h2>
+        <span id="table-count">0 registros</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="records"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>KubeLab · Proxmox · K3s · Argo CD</footer>
+</body>
+</html>
