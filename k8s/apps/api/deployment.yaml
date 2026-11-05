@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubelab-api
+  namespace: kubelab
+  labels:
+    app: kubelab-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: kubelab-api
+  template:
+    metadata:
+      labels:
+        app: kubelab-api
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker1
+
+      containers:
+        - name: api
+          image: ghcr.io/massy100/kubelab-api:v1
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - name: http
+              containerPort: 3000
+
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3000"
+            - name: DB_HOST
+              value: postgresql.kubelab.svc.cluster.local
+            - name: DB_PORT
+              value: "5432"
+
+          envFrom:
+            - secretRef:
+                name: postgresql-credentials
+
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 300m
+              memory: 192Mi
+
+          startupProbe:
+            tcpSocket:
+              port: 3000
+            periodSeconds: 5
+            failureThreshold: 24
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            periodSeconds: 10
+            timeoutSeconds: 5
+
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            periodSeconds: 20
+            timeoutSeconds: 3
