@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubelab-web
+  namespace: kubelab
+  labels:
+    app: kubelab-web
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: kubelab-web
+  template:
+    metadata:
+      labels:
+        app: kubelab-web
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker1
+
+      containers:
+        - name: web
+          image: ghcr.io/massy100/kubelab-web:v1
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - name: http
+              containerPort: 80
+
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 20
