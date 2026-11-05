@@ -21,7 +21,7 @@ spec:
 
       containers:
         - name: api
-          image: ghcr.io/massy100/kubelab-api:v1
+          image: ghcr.io/massy100/kubelab-api:sha-5a668bf33082
           imagePullPolicy: IfNotPresent
 
           ports:

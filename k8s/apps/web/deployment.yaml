@@ -21,7 +21,7 @@ spec:
 
       containers:
         - name: web
-          image: ghcr.io/massy100/kubelab-web:v1
+          image: ghcr.io/massy100/kubelab-web:sha-5a668bf33082
           imagePullPolicy: IfNotPresent
 
           ports:
