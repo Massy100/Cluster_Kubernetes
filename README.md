@@ -166,4 +166,44 @@ La captura confirma que la configuración de MetalLB se encuentra funcionando
 correctamente. La asignación de direcciones IP permite que los servicios
 publicados mediante `LoadBalancer` sean accesibles desde la red configurada.
 
-![Configuración funcional de MetalLB](metallb_configr_working.png)
+![Configuración funcional de MetalLB](docs/img/metalLB_installation_guide.png)
+
+### 7.7 Aplicación de Traefik
+
+La captura muestra la aplicación de Traefik desplegada correctamente en el
+clúster. Este componente administra el enrutamiento del tráfico entrante
+hacia los servicios publicados por Kubernetes.
+
+![Traefik aplicado](docs/img/traefik_applied.png)
+
+### 7.8 Evidencia de persistencia de datos
+
+La evidencia confirma que los datos de la aplicación permanecen disponibles
+después de las operaciones realizadas sobre el pod. Esto demuestra que el
+almacenamiento persistente está funcionando correctamente.
+
+![Evidencia de persistencia](docs/img/persistence_evidence.png)
+
+### 7.9 Despliegue de la StorageClass
+
+La captura muestra la creación y configuración de la `StorageClass` utilizada
+por Kubernetes para aprovisionar almacenamiento persistente. Esta configuración
+permite que las aplicaciones soliciten volúmenes según sus necesidades.
+
+![Despliegue de la StorageClass](docs/img/storageclass_deployment.png)
+
+### 7.10 Prueba de eliminación del pod
+
+La prueba muestra la eliminación controlada de un pod para verificar el
+comportamiento de recuperación de la aplicación. Esta operación permite
+comprobar que Kubernetes puede detectar y gestionar la ausencia del pod.
+
+![Prueba de eliminación del pod](docs/img/test_pod_deleted.png)
+
+### 7.11 Recreación del pod y recuperación de datos
+
+La captura muestra la recreación del pod y la recuperación de los datos
+previamente almacenados. El resultado confirma que la aplicación conserva la
+información mediante el volumen persistente después de reiniciarse.
+
+![Recreación del pod y recuperación de datos](docs/img/pod_recreation.png)
