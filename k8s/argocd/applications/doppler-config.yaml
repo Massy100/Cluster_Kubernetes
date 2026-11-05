@@ -1,0 +1,26 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: doppler-config
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Massy100/Cluster_Kubernetes.git
+    targetRevision: main
+    path: k8s/platform/doppler
+    directory:
+      include: postgresql-secret.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: doppler-operator-system
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
