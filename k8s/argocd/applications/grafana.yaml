@@ -1,5 +1,28 @@
-replicas: 1
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
 
+spec:
+  project: default
+
+  source:
+    repoURL: https://grafana-community.github.io/helm-charts
+    chart: grafana
+    targetRevision: 13.2.5
+
+    helm:
+      releaseName: grafana
+
+      valuesObject:
+        replicas: 1
+
+        # Ejecutar Grafana en el Control Plane
+        nodeSelector:
+          kubernetes.io/hostname: k8s-control
+
+        # Recursos para el laboratorio
         resources:
           requests:
             cpu: 25m
@@ -8,8 +31,27 @@ replicas: 1
             cpu: 300m
             memory: 512Mi
 
+        # No instalar plugins adicionales mediante Helm
         plugins: []
 
+        # Servicio interno de Kubernetes
+        service:
+          type: ClusterIP
+          port: 80
+
+        # Usuario administrador
+        adminUser: admin
+
+        # Almacenamiento persistente
+        persistence:
+          enabled: true
+          type: pvc
+          storageClassName: local-path
+          accessModes:
+            - ReadWriteOnce
+          size: 1Gi
+
+        # Configuración de Grafana
         grafana.ini:
           analytics:
             reporting_enabled: false
@@ -23,3 +65,29 @@ replicas: 1
 
           unified_alerting:
             enabled: false
+
+        # Conexión automática a Prometheus
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+              - name: Prometheus
+                uid: prometheus
+                type: prometheus
+                access: proxy
+                url: http://prometheus-server.monitoring.svc.cluster.local:80
+                isDefault: true
+                editable: false
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: false
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
