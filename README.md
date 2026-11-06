@@ -1,9 +1,7 @@
 # Configuración del laboratorio de Proxmox y Kubernetes
 
 Este documento registra la instalación y validación de un entorno pequeño de
-Kubernetes alojado en Proxmox VE. El laboratorio contiene un host de Proxmox,
-una máquina virtual para el control plane de Kubernetes y tres máquinas
-virtuales worker.
+Kubernetes alojado en Proxmox VE.
 
 # Grupo 8 — KubeLab
 
@@ -132,6 +130,7 @@ virtuales worker.
 - El frontend cuenta con HPA configurado de **1 a 2 réplicas**; durante la prueba se observaron eventos de escalado automático `1 → 2 → 1` motivados por métricas de CPU.
 - Se comprobó la continuidad de la infraestructura al cambiar la conexión ascendente de Windows desde Wi-Fi doméstico a un hotspot celular, manteniendo ICS y las IP estáticas internas.
 
+# Pasos realizados
 
 ## 1. Instalación de Proxmox VE
 
