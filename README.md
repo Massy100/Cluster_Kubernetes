@@ -210,6 +210,12 @@ información mediante el volumen persistente después de reiniciarse.
 
 ## 8. Gestión segura de secretos con Doppler
 
+### 8.0 Dashboard de Doppler
+
+La captura muestra el Dashboard de Doppler con los secretos, sin revelar, que gestiona, para el proyecto.
+
+![doppler dashboard](docs/img/doppler_dashboard.png)
+
 ### 8.1 Aplicación de Doppler
 
 La captura muestra Doppler aplicado en el clúster de Kubernetes. Esta
@@ -643,3 +649,7 @@ La captura muestra la conexión remota a los puertos publicados para acceder a
 los servicios del clúster.
 
 ![Acceso remoto a los puertos](docs/img/ports_remote_connection.png)
+
+### 15.6
+En esta captura se muestra el dashboard de grafana, luego de realizar un cambio de dominio
+![grafana dashboard via new domain](docs/img/grafana_new_domain_dashboard.png)
