@@ -21,3 +21,12 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      name: kubelab-web
+      namespace: kubelab
+      jsonPointers:
+        - /spec/replicas
