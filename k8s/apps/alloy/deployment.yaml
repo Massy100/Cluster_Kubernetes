@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alloy
+  namespace: monitoring
+  labels:
+    app: alloy
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+
+  selector:
+    matchLabels:
+      app: alloy
+
+  template:
+    metadata:
+      labels:
+        app: alloy
+
+    spec:
+      serviceAccountName: alloy
+
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker1
+
+      containers:
+        - name: alloy
+          image: grafana/alloy:v1.21.3
+          imagePullPolicy: IfNotPresent
+
+          args:
+            - run
+            - /etc/alloy/config.alloy
+            - --server.http.listen-addr=0.0.0.0:12345
+
+          ports:
+            - name: http
+              containerPort: 12345
+
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 192Mi
+
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 12345
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          volumeMounts:
+            - name: config
+              mountPath: /etc/alloy
+              readOnly: true
+
+      volumes:
+        - name: config
+          configMap:
+            name: alloy-config
