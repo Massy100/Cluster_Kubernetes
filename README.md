@@ -292,4 +292,354 @@ validación del servicio sin exponerlo permanentemente fuera del clúster.
 
 ![Acceso mediante port forwarding](docs/img/port_forwarding.png)
 
-![Sinrconizacion de postgresql](docs/img/postgrsql_sync.png)
+### 9.5 Sincronización de PostgreSQL
+
+La captura confirma la sincronización de PostgreSQL con la configuración
+definida para la aplicación. Esta validación demuestra que la base de datos
+está integrada correctamente con los secretos y el almacenamiento del
+clúster.
+
+![Sincronización de PostgreSQL](docs/img/postgrsql_sync.png)
+
+## 10. Despliegue de la API y operaciones con PostgreSQL
+
+### 10.1 Imagen de contenedor y servicios de la API
+
+La captura muestra la imagen de contenedor de la API y los servicios
+relacionados con su despliegue. Estos elementos permiten preparar la aplicación
+para ejecutarse y comunicarse dentro del clúster.
+
+![Servicios de la API e imagen de Docker](docs/img/docker_api_services.png)
+
+### 10.2 Validación de los manifiestos
+
+La salida muestra la validación de los manifiestos de Kubernetes antes de su
+aplicación. Esta comprobación ayuda a detectar errores de configuración en los
+recursos declarados.
+
+![Validación de los manifiestos](docs/img/manifest_validation.png)
+
+### 10.3 Aplicaciones de Argo CD
+
+La vista de Argo CD muestra las aplicaciones registradas para su despliegue.
+Permite revisar su estado y confirmar que están bajo la gestión del flujo
+GitOps configurado.
+
+![Aplicaciones de Argo CD](docs/img/agrocd_applications.png)
+
+### 10.4 Pods administrados por Argo CD
+
+La captura muestra los pods asociados a las aplicaciones de Argo CD y su estado
+en Kubernetes. Esta revisión permite comprobar los recursos creados durante el
+despliegue.
+
+![Pods de Argo CD](docs/img/argocd_pods.png)
+
+### 10.5 Estado de los servicios
+
+La salida presenta los servicios creados para la aplicación y sus datos de
+acceso. Esta información permite verificar cómo se exponen los componentes
+dentro del clúster.
+
+![Estado de los servicios](docs/img/svc_advance.png)
+
+### 10.6 Conexión con la base de datos
+
+La captura muestra la comprobación de conectividad entre la aplicación y
+PostgreSQL. Esta prueba permite validar que la API puede comunicarse con la
+base de datos configurada.
+
+![Conexión con la base de datos](docs/img/db_connection.png)
+
+### 10.7 Prueba del servicio de la API
+
+La solicitud de prueba permite comprobar que el servicio de la API responde
+desde el clúster. Es una verificación inicial de que el endpoint está
+disponible.
+
+![Prueba del servicio de la API](docs/img/api_test_service.png)
+
+### 10.8 Inserción de datos en PostgreSQL
+
+La captura muestra una operación de inserción enviada desde PowerShell para
+crear un registro en PostgreSQL mediante la API.
+
+![Inserción de datos desde PowerShell](docs/img/postgres_powershell_insert.png)
+
+### 10.9 Consulta de datos con GET
+
+La solicitud `GET` permite recuperar datos a través de la API y verificar que
+los registros están disponibles para su lectura.
+
+![Consulta de datos con GET](docs/img/postrgres_poweshell_get.png)
+
+### 10.10 Consulta directa de registros
+
+La captura muestra la consulta de los registros almacenados en PostgreSQL,
+como comprobación de los datos disponibles en la base de datos.
+
+![Consulta de registros de PostgreSQL](docs/img/postgres_powershell_select.png)
+
+### 10.11 Actualización de datos con PUT
+
+La solicitud `PUT` muestra la actualización de un registro existente mediante
+la API.
+
+![Actualización de datos con PUT](docs/img/postgres_powershell_put.png)
+
+### 10.12 Verificación de la actualización
+
+La consulta posterior a la operación `PUT` permite comprobar que los cambios
+se guardaron en PostgreSQL.
+
+![Verificación de la actualización en PostgreSQL](docs/img/postgres_powershell_put_select.png)
+
+### 10.13 Eliminación y confirmación de datos
+
+La captura muestra la eliminación de un registro y la comprobación posterior
+de que ya no aparece en los resultados.
+
+![Eliminación y confirmación de datos](docs/img/postgres_powershell_delete_confirm.png)
+
+## 11. Despliegue de Kubelab y flujo CI/CD
+
+### 11.1 Interfaz de Kubelab
+
+La captura muestra la interfaz web de Kubelab, desde la que se accede a las
+funciones de la aplicación.
+
+![Interfaz de Kubelab](docs/img/kubelab_interface.png)
+
+### 11.2 Despliegue de la Web API
+
+La salida muestra el despliegue de la Web API en Kubernetes y los recursos
+asociados a su puesta en marcha.
+
+![Despliegue de la Web API](docs/img/webapi_deploy.png)
+
+### 11.3 Verificación de la Web API
+
+La captura muestra la Web API funcionando después del despliegue, como
+comprobación de que la aplicación está disponible.
+
+![Web API en funcionamiento](docs/img/webapi_depoly_working.png)
+
+### 11.4 Servicios de Kubelab
+
+La salida presenta los servicios de Kubelab en ejecución y permite verificar
+los puntos de acceso configurados para la aplicación.
+
+![Servicios de Kubelab en ejecución](docs/img/kubelab_services_running.png)
+
+### 11.5 Despliegue mediante CI/CD
+
+La captura muestra la ejecución del proceso de despliegue CI/CD para publicar
+la aplicación en el clúster.
+
+![Despliegue mediante CI/CD](docs/img/cicd_deploy.png)
+
+### 11.6 Pods después del despliegue
+
+La verificación muestra los pods existentes después del despliegue CI/CD y
+permite revisar su estado en Kubernetes.
+
+![Pods después del despliegue](docs/img/pods_after_deployment.png)
+
+## 12. Monitoreo con Prometheus y Grafana
+
+### 12.1 Pods de Prometheus
+
+La captura muestra los pods de Prometheus y permite verificar el estado de los
+componentes de monitoreo desplegados en Kubernetes.
+
+![Pods de Prometheus](docs/img/prometheus_pods.png)
+
+### 12.2 Interfaz de Prometheus
+
+La interfaz de Prometheus permite consultar el estado del sistema de monitoreo
+y explorar las métricas recopiladas.
+
+![Interfaz de Prometheus](docs/img/prometheus_interface.png)
+
+### 12.3 Monitoreo de la API
+
+La captura muestra métricas asociadas a la Web API en Prometheus, para revisar
+su actividad y comportamiento.
+
+![Monitoreo de la Web API](docs/img/prometheus_api_monitoring.png)
+
+### 12.4 Tráfico de la Web API y del sitio web
+
+La visualización presenta métricas de tráfico de la Web API y del sitio web,
+útiles para observar las solicitudes recibidas por los servicios.
+
+![Tráfico de la Web API y del sitio web](docs/img/prometheus_web_api_traffic.png)
+
+### 12.5 Estado de los pods y acceso a Grafana
+
+La primera captura permite revisar el estado de salud de los pods asociados a
+Grafana.
+
+![Estado de los pods y puerto de Grafana](docs/img/grafana_pods_health.png)
+
+La segunda captura verifica la dirección IP y el puerto configurados para
+acceder a Grafana.
+
+![Verificación de IP y puerto de Grafana](docs/img/grafana_port_ip_verification.png)
+
+### 12.6 Paneles de Grafana
+
+El panel de Grafana presenta las métricas recopiladas para facilitar la
+supervisión visual del clúster y sus aplicaciones.
+
+![Panel de Grafana](docs/img/grafana_dashboard.png)
+
+### 12.7 Integración de Grafana con Prometheus
+
+La captura muestra la configuración de Prometheus como fuente de datos de
+Grafana, necesaria para consultar y visualizar sus métricas desde los paneles.
+
+![Integración de Grafana con Prometheus](docs/img/grafana_prometheus_integration.png)
+
+### 12.8 Conexión de la API de Kubelab
+
+La captura muestra la conexión de Kubelab con su API, como parte de la
+integración entre la interfaz y el servicio de backend.
+
+![Conexión de la API de Kubelab](docs/img/kubelab_api_connection.png)
+
+### 12.9 Métricas de Kubelab
+
+La vista presenta las métricas disponibles para Kubelab y permite inspeccionar
+la información expuesta por la aplicación para su monitoreo.
+
+![Métricas de Kubelab](docs/img/kubelab_metrics.png)
+
+### 12.10 Visualización de consultas
+
+La captura muestra la visualización de consultas de métricas en Kubelab,
+permitiendo revisar los resultados obtenidos desde la interfaz.
+
+![Visualización de consultas](docs/img/kubelab_query_visualization.png)
+
+### 12.11 Paneles adicionales y validación de consultas
+
+El primer panel muestra una visualización adicional de las métricas en
+Grafana.
+
+![Panel adicional de Grafana](docs/img/grafana_dashboard1.png)
+
+El segundo panel presenta otra vista de las métricas disponibles en Grafana.
+
+![Segundo panel de Grafana](docs/img/grafana_dashboard6.png)
+
+La última captura permite comprobar el estado de los pods después de ejecutar
+consultas en los paneles.
+
+![Verificación de pods después de las consultas](docs/img/pods_check_after_dashboard_queries.png)
+
+## 13. Recolección y consulta de logs con Loki
+
+### 13.1 Estado del pod de Loki
+
+La captura muestra el pod de Loki en estado saludable y sincronizado, como
+verificación del componente de almacenamiento y consulta de logs.
+
+![Pod de Loki saludable y sincronizado](docs/img/loki_pod_healthy.png)
+
+### 13.2 Integración de Grafana con Loki
+
+La captura muestra la integración de Loki en Grafana para consultar y explorar
+los registros desde la interfaz de monitoreo.
+
+![Integración de Grafana con Loki](docs/img/grafana_loki_integration.png)
+
+### 13.3 Pod de Alloy
+
+La salida confirma la creación del pod de Alloy, componente utilizado en este
+entorno para recopilar y enviar registros hacia Loki.
+
+![Pod de Alloy creado](docs/img/alloy_pod_created.png)
+
+### 13.4 Consulta de logs
+
+La captura muestra registros consultados desde Loki, como comprobación del
+flujo de recolección y visualización de logs.
+
+![Logs de Loki](docs/img/loki_logs.png)
+
+## 14. Escalado automático de la aplicación
+
+### 14.1 HPA con una réplica
+
+La captura muestra el estado inicial del Horizontal Pod Autoscaler (HPA) con
+una réplica de la aplicación, que sirve como referencia antes de aumentar la
+carga.
+
+![HPA con una réplica](docs/img/hpa_replica1.png)
+
+### 14.2 Uso de CPU de la primera réplica
+
+La visualización muestra el consumo de CPU de la primera réplica durante la
+prueba de carga.
+
+![Uso de CPU de la primera réplica](docs/img/replica1_cpu_usage.png)
+
+### 14.3 HPA con dos réplicas
+
+La captura muestra dos réplicas de la aplicación después de que el HPA ajusta
+la cantidad de pods en respuesta a la carga.
+
+![HPA con dos réplicas](docs/img/hpa_replica2.png)
+
+### 14.4 Reescalado ante exceso de CPU
+
+La evidencia muestra el reescalado de la aplicación al superar el umbral de
+uso de CPU configurado. Esto permite comprobar la respuesta automática del HPA
+ante un aumento de demanda.
+
+![Reescalado ante exceso de CPU](docs/img/cpu_excess_reescalation.png)
+
+### 14.5 Verificación de pods
+
+La salida permite comprobar el estado de los pods después de la prueba de
+escalado.
+
+![Verificación de pods](docs/img/pods_verification.png)
+
+## 15. Acceso remoto y disponibilidad de las aplicaciones
+
+### 15.1 Acceso mediante datos móviles
+
+La captura muestra el acceso remoto al entorno utilizando una conexión de
+datos móviles, como prueba de disponibilidad fuera de la red local.
+
+![Acceso remoto mediante datos móviles](docs/img/remote_access_with_cellular_data.png)
+
+### 15.2 Conectividad con los nodos
+
+La prueba de conectividad muestra respuestas desde el control plane y Worker 1,
+verificando que ambos nodos son alcanzables desde el entorno remoto.
+
+![Conectividad con el control plane y Worker 1](docs/img/ping_control_plane_worker1.png)
+
+### 15.3 Aplicaciones disponibles desde acceso remoto
+
+La captura muestra las aplicaciones accesibles mediante la conexión remota,
+como comprobación de su disponibilidad desde fuera de la red local.
+
+![Aplicaciones disponibles mediante acceso remoto](docs/img/apps_working_remote.png)
+
+### 15.4 Estado de los pods durante el acceso remoto
+
+La salida muestra los pods saludables y sincronizados mientras se valida el
+acceso remoto a las aplicaciones.
+
+![Pods saludables y sincronizados](docs/img/pods_healthy_synced.png)
+
+### 15.5 Conexión remota a los puertos
+
+La captura muestra la conexión remota a los puertos publicados para acceder a
+los servicios del clúster.
+
+![Acceso remoto a los puertos](docs/img/ports_remote_connection.png)
